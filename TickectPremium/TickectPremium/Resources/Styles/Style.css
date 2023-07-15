@@ -1,0 +1,30 @@
+﻿/* Styles for LoginPage.xaml */
+/* Styles.css */
+
+/* Estilo para el contenedor principal */
+.login-container {
+    padding: 20;
+    background-color: #FDFEFE;
+    border-radius: 10;
+    margin: 20;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.error-message {
+    color: #FF0000;
+    font-size: 14;
+    text-align: center;
+    margin-top: 10;
+}
+.error-message-password {
+    color: #B71C1C;
+    font-size: 15;
+    text-align: end;
+    margin-right: 10;
+}
+
+.label-entry {
+    color: #7F8C8D;
+    font-size: 14;
+    opacity: 0.5;
+}

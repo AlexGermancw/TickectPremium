@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TickectPremium.Views.Auth.LoginPage"
+             >
+    <ContentPage.Resources>
+        <StyleSheet Source="../../Resources/Styles/Style.css"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout StyleClass="login-container">
+
+                <Frame CornerRadius="100" HeightRequest="100" WidthRequest="150" HorizontalOptions="Center"
+                        Padding="0" IsClippedToBounds="True" >
+                    <Image Source="pagPrincipal.png" HeightRequest="300" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Frame>
+
+                <Label Text="Inicia sesión" FontSize="35" TextColor="Black" HorizontalOptions="Center" Margin="0,20,0,10"/>
+
+                <Frame CornerRadius="30" BackgroundColor="#F2F2F2" HasShadow="False" HeightRequest="20" Margin="0,20,0,0">
+                    <Entry x:Name="UsernameEntry" Placeholder="Usuario" PlaceholderColor="#7C7D7e" TextColor="Black" ReturnType="Next"
+                           HorizontalTextAlignment="Start" Margin="0,-30,0,-30"  />
+                </Frame>
+
+                <Frame CornerRadius="30" BackgroundColor="#F2F2F2" HasShadow="False" HeightRequest="20" Margin="0,10,0,0">
+                    <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" PlaceholderColor="#7C7D7e" TextColor="Black" ReturnType="Done"
+                           HorizontalTextAlignment="Start" Margin="0,-30,0,-30"  />
+                </Frame>
+
+                <Button x:Name="btnLogin" Text="Login" BackgroundColor="#2E86C1" TextColor="White"  WidthRequest="410" HeightRequest="55" 
+                        HorizontalOptions="Center" CornerRadius="30" Margin="0,30,0,0" Clicked="btnLogin_Clicked" />
+
+                <Label x:Name="ErrorMessageLabel" Text="Usuario o Contraseña Incorecta" StyleClass="error-message" IsVisible="False" />
+
+                <StackLayout HorizontalOptions="CenterAndExpand" Grid.Column="1" Orientation="Horizontal" Margin="0,60,0,0" Spacing="10">
+                    <Label Text="¿No tienes una cuenta?" FontSize="19" />
+                    <Label x:Name="RegisterLabel" Text="Regístrate" TextColor="#2E86C1" FontSize="19" FontAttributes="Bold" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

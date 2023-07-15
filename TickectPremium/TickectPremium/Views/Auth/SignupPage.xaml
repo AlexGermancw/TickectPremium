@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TickectPremium.Views.Auth.SignupPage">
+
+    <ContentPage.Resources>
+        <StyleSheet Source="../../Resources/Styles/Style.css"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout StyleClass="login-container">
+
+                <Frame CornerRadius="100" HeightRequest="100" WidthRequest="150" HorizontalOptions="Center"
+                        Padding="0" IsClippedToBounds="True" >
+                    <Image Source="pagPrincipal.png" HeightRequest="300" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Frame>
+
+                <Label Text="Registro" FontSize="30" TextColor="Black" HorizontalOptions="Center" Margin="0,20,0,0"/>
+
+                <Frame CornerRadius="20" BackgroundColor="#F2F2F2" HasShadow="False" HeightRequest="10" Margin="0,20,0,0">
+                    <Entry x:Name="NameEntry" Placeholder="Nombre" PlaceholderColor="#7C7D7e" TextColor="Black" ReturnType="Next"
+                           HorizontalTextAlignment="Start" Margin="0,-30,0,-30" Focused="OnEntryFocused" Unfocused="OnEntryUnfocused" />
+                </Frame>
+                <Label x:Name="PlaceholderLabelName" Text="Nombre" IsVisible="False" TranslationY="0" Margin="20,-65,0,45" StyleClass="label-entry" />
+
+                <Frame CornerRadius="20" BackgroundColor="#F2F2F2" HasShadow="False" HeightRequest="10" Margin="0,5,0,0">
+                    <Entry x:Name="LastNameEntry" Placeholder="Apellido" PlaceholderColor="#7C7D7e" TextColor="Black" ReturnType="Next"
+                           HorizontalTextAlignment="Start" Margin="0,-30,0,-30" Focused="OnEntryFocused" Unfocused="OnEntryUnfocused" />
+                </Frame>
+                <Label x:Name="PlaceholderLabelLastName" Text="Apellido" IsVisible="False" TranslationY="0" Margin="20,-65,0,45"  StyleClass="label-entry"/>
+
+                <Frame CornerRadius="20" BackgroundColor="#F2F2F2" HasShadow="False" HeightRequest="10" Margin="0,5,0,0">
+                    <Entry x:Name="EmailEntry" Placeholder="correo@correo.com" PlaceholderColor="#7C7D7e" TextColor="Black" ReturnType="Next"
+                           HorizontalTextAlignment="Start" Margin="0,-30,0,-30" Focused="OnEntryFocused" Unfocused="OnEntryUnfocused" />
+                </Frame>
+                <Label x:Name="PlaceholderLabelEmail" Text="Correo" IsVisible="False" TranslationY="0" Margin="20,-65,0,45"  StyleClass="label-entry"/>
+
+                <Frame CornerRadius="20" BackgroundColor="#F2F2F2" HasShadow="False" HeightRequest="10" Margin="0,5,0,0">
+                    <Entry x:Name="PhoneEntry" Placeholder="Teléfono" Keyboard="Numeric" PlaceholderColor="#7C7D7e" TextColor="Black" ReturnType="Next"
+                           HorizontalTextAlignment="Start" Margin="0,-30,0,-30" Focused="OnEntryFocused" Unfocused="OnEntryUnfocused" />
+                </Frame>
+                <Label x:Name="PlaceholderLabelPhone" Text="Teléfono" IsVisible="False" TranslationY="0" Margin="20,-65,0,45"  StyleClass="label-entry"/>
+
+                <Frame CornerRadius="20" BackgroundColor="#F2F2F2" HasShadow="False" HeightRequest="10" Margin="0,5,0,0">
+                    <Entry x:Name="UserEntry" Placeholder="Usuario" PlaceholderColor="#7C7D7e" TextColor="Black" ReturnType="Next"
+                           HorizontalTextAlignment="Start" Margin="0,-30,0,-30" Focused="OnEntryFocused" Unfocused="OnEntryUnfocused" />
+                </Frame>
+                <Label x:Name="PlaceholderLabelUser" Text="Usuario" IsVisible="False" TranslationY="0" Margin="20,-65,0,45"  StyleClass="label-entry"/>
+
+                <Frame CornerRadius="20" BackgroundColor="#F2F2F2" HasShadow="False" HeightRequest="10" Margin="0,5,0,0">
+                    <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" PlaceholderColor="#7C7D7e" TextColor="Black" ReturnType="Next"
+                           HorizontalTextAlignment="Start" Margin="0,-30,0,-30" Focused="OnEntryFocused" Unfocused="OnEntryUnfocused" />
+                </Frame>
+                <Label x:Name="PlaceholderLabelPassword" Text="Contraseña" IsVisible="False" TranslationY="0" Margin="20,-65,0,45"  StyleClass="label-entry"/>
+
+                <Frame CornerRadius="20" BackgroundColor="#F2F2F2" HasShadow="False" HeightRequest="10" Margin="0,5,0,0">
+                    <Entry x:Name="RepeatPasswordEntry" Placeholder="Repetir contresña" IsPassword="True" PlaceholderColor="#7C7D7e" TextColor="Black" ReturnType="Done"
+                           HorizontalTextAlignment="Start" Margin="0,-30,0,-30" Focused="OnEntryFocused" Unfocused="OnEntryUnfocused" />
+                </Frame>
+                <Label x:Name="PlaceholderLabelRepeatPassword" Text="Repetir contraseña" IsVisible="False" TranslationY="0" Margin="20,-65,0,45"  StyleClass="label-entry"/>
+
+                <Label x:Name="ErrorMessagePasswordLabel" IsVisible="False" StyleClass="error-message-password"/>
+                
+                <Button x:Name="btnSignup" Text="Login" BackgroundColor="#2E86C1" TextColor="White" Clicked="btnSignup_Clicked"
+                        WidthRequest="410" HeightRequest="55"
+                        HorizontalOptions="Center" CornerRadius="30" Margin="0,30,0,0" />
+
+                <Label x:Name="ErrorMessageLabel" StyleClass="error-message" IsVisible="False" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

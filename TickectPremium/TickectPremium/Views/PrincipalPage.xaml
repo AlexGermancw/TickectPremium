@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:TickectPremium.ViewModels"
+             x:Class="TickectPremium.Views.PrincipalPage">
+
+    <NavigationPage.TitleView>
+        <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+            <Label Text="INICIO" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+    <ContentPage.BindingContext>
+        <viewModels:VMMatches/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Margin="0,20,0,0">
+            <CollectionView ItemsSource="{Binding Matches}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="20,0,20,20">
+                            <Frame CornerRadius="15" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="0" Padding="10">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnFrameTapped" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                                <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding LocalTeam}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#2E86C1"/>
+                                    <Label Grid.Column="1" Text="VS" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="10,0,10,0"/>
+                                    <Label Grid.Column="2" Text="{Binding VisitingTeam}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#2E86C1"/>
+                                    <Label Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding Place}" FontSize="18" HorizontalOptions="Center" />
+                                    <Label Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding DateMatch.Date, StringFormat='{0:dd/MM/yyyy}'}" FontSize="18" HorizontalOptions="Center" />
+                                    <Label Grid.Row="3" Grid.ColumnSpan="3" FontSize="18" HorizontalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Hour.Hours}"/>
+                                                <Span Text=":"/>
+                                                <Span Text="{Binding Hour.Minutes}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+
