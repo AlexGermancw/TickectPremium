@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rg.Plugins.Popup.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,53 +11,47 @@ using Xamarin.Forms.Xaml;
 
 namespace TickectPremium.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SeatingAreaPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class SeatingAreaPage : Rg.Plugins.Popup.Pages.PopupPage
     {
-        private MatchSeatingArea seatingArea;
-
+        //private MatchSeatingArea seatingArea;
+        public event EventHandler<MatchSeatingArea> SeatingAreaAdded;
         public VMSeatingArea ViewModel { get; set; }
 
         public SeatingAreaPage(Match match)
         {
             InitializeComponent();
-            //NavigationPage.SetHasNavigationBar(this, false);
             ViewModel = new VMSeatingArea(match);
             BindingContext = ViewModel;
+            CloseWhenBackgroundIsClicked = true;
         }
 
         private void MinusButtonClicked(object sender, EventArgs e)
         {
-            var button = (Button)sender;
-            var seatingArea = (MatchSeatingArea)button.CommandParameter;
-
-            if (seatingArea.entry > 0)
+            if (ViewModel.SelectedSeatingArea != null && ViewModel.SelectedSeatingArea.entry > 0)
             {
-                seatingArea.entry--;
+                ViewModel.SelectedSeatingArea.entry--;
             }
         }
 
         private void PlusButtonClicked(object sender, EventArgs e)
         {
-            var button = (Button)sender;
-            var seatingArea = (MatchSeatingArea)button.CommandParameter;
-
-            if (seatingArea.entry < seatingArea.TotalTickets)
+            if (ViewModel.SelectedSeatingArea != null && ViewModel.SelectedSeatingArea.entry < ViewModel.SelectedSeatingArea.TotalTickets)
             {
-                seatingArea.entry++;
+                ViewModel.SelectedSeatingArea.entry++;
             }
         }
 
-        private void FrameBindingContextChanged(object sender, EventArgs e)
+        private void btnAddSeatingArea_Clicked(object sender, EventArgs e)
         {
-            var frame = (Frame)sender;
-            seatingArea = (MatchSeatingArea)frame.BindingContext;
-        }
+            if (ViewModel.SelectedSeatingArea != null && ViewModel.SelectedSeatingArea.entry > 0)
+            {
+                // Disparar el evento y pasar el objeto seleccionado como argumento
+                SeatingAreaAdded?.Invoke(this, ViewModel.SelectedSeatingArea);
 
-        private void btnBuyTicket_Clicked(object sender, EventArgs e)
-        {
-            var selectedItems = ViewModel.MatchSeatingAreas.Where(item => item.entry > 0).ToList();
-            Navigation.PushAsync(new PurchasePage(ViewModel.Match, selectedItems,null,true));
+                // Cerrar el popup
+                PopupNavigation.Instance.PopAsync();
+            }
         }
     }
 

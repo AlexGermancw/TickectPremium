@@ -1,18 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using TickectPremium.Models;
 
 namespace TickectPremium.ViewModels
 {
-    public class VMPurchasePage
+    public class VMPurchasePage : INotifyPropertyChanged
     {
         public Match Match { get; set; }
         //public List<MatchSeatingArea> MatchSeatingAreas { get; set; }
-        public List<DetailTicket> DetailTickets { get; set; }
+        public ObservableCollection<DetailTicket> DetailTickets { get; set; }
 
-        public double TotalPriceTicket { get; set; }
+        private double _totalPriceTicket;
+        public double TotalPriceTicket
+        {
+            get { return _totalPriceTicket; }
+            set
+            {
+                if (_totalPriceTicket != value)
+                {
+                    _totalPriceTicket = value;
+                    OnPropertyChanged(nameof(TotalPriceTicket));
+                }
+            }
+        }
 
         public VMPurchasePage() { }
         public VMPurchasePage(Match _match,List<MatchSeatingArea> _selectedItems, List<BuyTicket> buyTickets)
@@ -23,9 +37,9 @@ namespace TickectPremium.ViewModels
 
         }
 
-        private List<DetailTicket> GetDetailTickets(List<MatchSeatingArea> _selectedItems)
+        private ObservableCollection<DetailTicket> GetDetailTickets(List<MatchSeatingArea> _selectedItems)
         {
-            List<DetailTicket> detailTickets = new List<DetailTicket>();
+            ObservableCollection<DetailTicket> detailTickets = new ObservableCollection<DetailTicket>();
 
             foreach (MatchSeatingArea _matchSeatingArea in _selectedItems)
             {
@@ -58,6 +72,13 @@ namespace TickectPremium.ViewModels
             }
 
             return detailTickets;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

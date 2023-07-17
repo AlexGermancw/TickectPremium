@@ -13,7 +13,10 @@ namespace TickectPremium.ViewModels
 {
     public class VMSeatingArea : INotifyPropertyChanged
     {
+        #region VARIABLES
+
         private MatchController matchController;
+        private MatchSeatingArea _selectedSeatingArea;
         public Match Match { get; set; }
 
         private ObservableCollection<MatchSeatingArea> _matchSeatingAreas;
@@ -29,14 +32,30 @@ namespace TickectPremium.ViewModels
                 }
             }
         }
+        public MatchSeatingArea SelectedSeatingArea
+        {
+            get { return _selectedSeatingArea; }
+            set
+            {
+                if (_selectedSeatingArea != value)
+                {
+                    _selectedSeatingArea = value;
+                    OnPropertyChanged(nameof(SelectedSeatingArea));
+                }
+            }
+        }
+        
+        #endregion VARIABLES
+
+
         public VMSeatingArea() { }
 
         public VMSeatingArea( Match match)
         {
             matchController = new MatchController();
             Match = match;
-            MatchSeatingAreas = matchController.MatchSeatingAreaList(match.Id);
-            //MatchSeatingAreas = DataTest.GetMatchSeatingAreas();
+            //MatchSeatingAreas = matchController.MatchSeatingAreaList(match.Id);
+            MatchSeatingAreas = DataTest.GetMatchSeatingAreas();
         }
 
 

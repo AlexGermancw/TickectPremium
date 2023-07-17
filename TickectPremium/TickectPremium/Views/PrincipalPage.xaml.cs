@@ -28,9 +28,10 @@ namespace TickectPremium.Views
         {
             var frame = sender as Frame;
             var match = frame?.BindingContext as Match;
+            List<MatchSeatingArea> seatingAreas = new List<MatchSeatingArea>();
             if (match != null)
             {
-                await Navigation.PushAsync(new SeatingAreaPage(match));
+                await Navigation.PushAsync(new PurchasePage(match,seatingAreas,null,true));
             }
         }
     }

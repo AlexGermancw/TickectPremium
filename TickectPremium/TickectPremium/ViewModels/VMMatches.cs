@@ -23,8 +23,8 @@ namespace TickectPremium.ViewModels
         public VMMatches()
         {
             matchController = new MatchController();
-            Matches = matchController.MatchList();
-            //Matches = DataTest.GetMatches();
+            //Matches = matchController.MatchList();
+            Matches = DataTest.GetMatches();
 
         }        
 
