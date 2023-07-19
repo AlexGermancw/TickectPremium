@@ -46,10 +46,8 @@ namespace TickectPremium.Views
         {
             if (ViewModel.SelectedSeatingArea != null && ViewModel.SelectedSeatingArea.entry > 0)
             {
-                // Disparar el evento y pasar el objeto seleccionado como argumento
                 SeatingAreaAdded?.Invoke(this, ViewModel.SelectedSeatingArea);
 
-                // Cerrar el popup
                 PopupNavigation.Instance.PopAsync();
             }
         }

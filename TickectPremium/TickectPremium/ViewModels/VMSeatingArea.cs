@@ -54,8 +54,8 @@ namespace TickectPremium.ViewModels
         {
             matchController = new MatchController();
             Match = match;
-            //MatchSeatingAreas = matchController.MatchSeatingAreaList(match.Id);
-            MatchSeatingAreas = DataTest.GetMatchSeatingAreas();
+            MatchSeatingAreas = matchController.MatchSeatingAreaList(match.Id);
+            //MatchSeatingAreas = DataTest.GetMatchSeatingAreas();
         }
 
 

@@ -21,8 +21,8 @@
                 </Frame>
                 <Button x:Name="btnBuy" Grid.Row="1" Text="Historial Compras" FontAttributes="Bold" FontSize="18" Margin="0,-6,0,0" Clicked="btnBuy_Clicked"
                         HeightRequest="70" VerticalOptions="CenterAndExpand" BackgroundColor="White" BorderColor="Black" BorderWidth="0.5" />
-                <Label Grid.Row="1" Text="{x:Static resources:IconFont.Basket}" FontFamily="fontello" FontSize="22"
-                       VerticalOptions="CenterAndExpand" HorizontalOptions="Start" Margin="70,-5,0,0"/>
+                <Label Grid.Row="1" Text="{x:Static resources:IconFont.Basket}" FontFamily="fontello" FontSize="22" TextColor="Black" FontAttributes="Bold"
+                       VerticalOptions="CenterAndExpand" HorizontalOptions="Start" Margin="50,-5,0,0"/>
                 <Button x:Name="btnLogout" Grid.Row="2" Text="Cerrar Sesión" FontAttributes="Bold" FontSize="18" Margin="0,-6,0,0" Clicked="btnLogout_Clicked"
                         HeightRequest="70" VerticalOptions="CenterAndExpand" BackgroundColor="White" BorderColor="Black" BorderWidth="0.5" />
 

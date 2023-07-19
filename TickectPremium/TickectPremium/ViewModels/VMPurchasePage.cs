@@ -55,25 +55,6 @@ namespace TickectPremium.ViewModels
             return detailTickets;
         }
 
-        private List<DetailTicket> GetDetailTicketsByBuyticket(List<BuyTicket> buyTickes)
-        {
-            List<DetailTicket> detailTickets = new List<DetailTicket>();
-
-            foreach (BuyTicket _buyTicket in buyTickes)
-            {
-                detailTickets.Add(new DetailTicket
-                {
-                    Id = _buyTicket.Id,
-                    Price = _buyTicket.Total/_buyTicket.Quantity,
-                    Quantity = _buyTicket.Quantity,
-                    SeatingArea = _buyTicket.seatingArea,
-                    TotalPrice = _buyTicket.Total
-                });
-            }
-
-            return detailTickets;
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)

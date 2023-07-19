@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:TickectPremium.ViewModels"
+             x:Class="TickectPremium.Views.ShoppingSummary.InvoiceSummaryPage">
+
+    <ContentPage.BindingContext>
+        <viewModels:VMInvoiceSummary/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="20,0,20,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Frame CornerRadius="15"  HorizontalOptions="FillAndExpand" Margin="0,10,0,0" Padding="10">
+                    <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Match.LocalTeam}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#2E86C1"/>
+                        <Label Grid.Column="1" Text="VS" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="10,0,10,0"/>
+                        <Label Grid.Column="2" Text="{Binding Match.VisitingTeam}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#2E86C1"/>
+                        <Label Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding Match.Place}" FontSize="18" HorizontalOptions="Center" />
+                        <Label Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding Match.DateMatch.Date, StringFormat='{0:dd/MM/yyyy}'}" FontSize="18" HorizontalOptions="Center" />
+                        <Label Grid.Row="3" Grid.ColumnSpan="3" FontSize="18" HorizontalOptions="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Match.Hour.Hours}"/>
+                                    <Span Text=":"/>
+                                    <Span Text="{Binding Match.Hour.Minutes}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Grid>
+                </Frame>
+
+                <Frame Grid.Row="1" CornerRadius="15"  HorizontalOptions="FillAndExpand" Margin="0" Padding="10">
+                    <Grid VerticalOptions="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="DETALLE" Grid.ColumnSpan="1" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Start" Margin="30,0,0,0"/>
+                        <Label Grid.Column="1" Text="CANTIDAD" Grid.ColumnSpan="1" FontSize="18" TextColor="Black" HorizontalOptions="End" FontAttributes="Bold" Margin="0,0,0,0"/>
+                        <Label Grid.Column="2" Text="TOTAL" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End" Margin="0,0,10,0"/>
+                    </Grid>
+                </Frame>
+
+                <Frame Grid.Row="2" CornerRadius="15" HorizontalOptions="FillAndExpand" Margin="0,0,0,0" Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ScrollView>
+                            <StackLayout BindableLayout.ItemsSource="{Binding DetailTickets}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Frame BackgroundColor="#EBFEFC" CornerRadius="15" Margin="0,0,0,0" Padding="10">
+                                            <Grid VerticalOptions="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0" Grid.ColumnSpan="2" FontSize="18" TextColor="Black" HorizontalOptions="Start">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="{Binding SeatingArea.Name}"/>
+                                                            <Span Text=" ($" />
+                                                            <Span Text="{Binding Price}" />
+                                                            <Span Text=")" />
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label Grid.Column="1" Text="{Binding Quantity}" FontSize="18" TextColor="Black" HorizontalOptions="EndAndExpand"/>
+                                                <Label Grid.Column="2" Text="{Binding TotalPrice}" FontSize="18" TextColor="Black" HorizontalOptions="End" Margin="0,0,10,0"/>
+                                            </Grid>
+                                        </Frame>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </ScrollView>
+                    </Grid>
+                </Frame>
+
+                <Frame Grid.Row="4" CornerRadius="15"  HorizontalOptions="FillAndExpand" Margin="0" Padding="10">
+                    <Grid VerticalOptions="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Grid.ColumnSpan="2" FontSize="18" TextColor="Black" HorizontalOptions="Start">
+                        </Label>
+                        <Label Grid.Column="1" Text="TOTAL $" FontSize="19" TextColor="Black" HorizontalOptions="End" FontAttributes="Bold"/>
+                        <Label Grid.Column="2" Text="{Binding TotalPriceTicket}" FontSize="20" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End" Margin="0,0,10,0"/>
+                    </Grid>
+
+                </Frame>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

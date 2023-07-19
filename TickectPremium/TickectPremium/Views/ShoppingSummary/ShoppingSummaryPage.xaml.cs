@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TickectPremium.Controllers;
 using TickectPremium.Models;
 using TickectPremium.ViewModels;
+using TickectPremium.Views.ShoppingSummary;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,15 +25,12 @@ namespace TickectPremium.Views
 
         private async void OnFrameTapped(object sender, EventArgs e)
         {
-            var frame = sender as Frame;
-            var item = frame?.BindingContext as ShoppingSummaryDTO;
-            MatchController matchController = new MatchController();
-            if (item != null)
+            var selectedMatch = (sender as Frame)?.BindingContext as ShoppingSummaryDTO;
+            if (selectedMatch != null)
             {
-                var match = matchController.GetMatchByCode(item.IdMatch);
-                var tickets = matchController.GetBuyTicketsByInvoiceCode(item.IdBill);
-                await Navigation.PushAsync(new PurchasePage(match,null,tickets,false));
+                await Navigation.PushAsync(new InvoiceSummaryPage(selectedMatch));
             }
         }
+
     }
 }

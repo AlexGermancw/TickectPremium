@@ -13,9 +13,9 @@ namespace TickectPremium
         {
             InitializeComponent();
 
-            //MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new LoginPage());
             //MainPage = new NavigationPage(new SeatingAreaPage(null));
-            MainPage = new NavigationPage(new PrincipalPage());
+            //MainPage = new NavigationPage(new PrincipalPage());
 
 
         }

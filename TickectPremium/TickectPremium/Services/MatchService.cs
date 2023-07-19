@@ -9,6 +9,7 @@ using TickectPremium.Models;
 using TickectPremium.Resources;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace TickectPremium.Services
 {
@@ -28,10 +29,11 @@ namespace TickectPremium.Services
                 connection.Open();
 
                 string query = "SELECT P.CODIGO AS ID, P.EQUIPO_LOCAL AS LocalTeam, P.EQUIPO_VISITA AS VisitingTeam, " +
-                "CAST(P.FECHA AS DATE) AS DateMatch, CAST(P.FECHA AS TIME) AS Hour, LUGAR AS Place, " +
-                "(SELECT SUM(DISPONIBILIDAD) FROM localidad_partido WHERE P.CODIGO = PARTIDO_CODIGO) AS TotalTickets " +
-                "FROM PARTIDO_FUTBOL P " +
-                "ORDER BY DateMatch, Hour;";
+                           "CAST(P.FECHA AS DATE) AS DateMatch, CAST(P.FECHA AS TIME) AS Hour, LUGAR AS Place, " +
+                           "(SELECT SUM(DISPONIBILIDAD) FROM localidad_partido WHERE P.CODIGO = PARTIDO_CODIGO) AS TotalTickets " +
+                           "FROM PARTIDO_FUTBOL P " +
+                           "WHERE CAST(P.FECHA AS DATE) >= CURDATE() " + 
+                           "ORDER BY DateMatch, Hour;";
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 ObservableCollection<Match> matches = new ObservableCollection<Match>();
@@ -132,6 +134,16 @@ namespace TickectPremium.Services
                     command.Parameters.AddWithValue("@idUsuario", buyTicket.IdUser);
                     command.Parameters.AddWithValue("@codigoFactura", buyTicket.IdBill);
                     command.ExecuteScalar();
+
+                    // Actualizar la cantidad de disponibilidad en localidad_partido
+                    string updateQuery = "UPDATE localidad_partido SET DISPONIBILIDAD = DISPONIBILIDAD - @cantidad " +
+                                         "WHERE CODIGO_LOCALIDAD = @localidadCodigo AND PARTIDO_CODIGO = @partidoCodigo;";
+                    MySqlCommand updateCommand = new MySqlCommand(updateQuery, connection);
+                    updateCommand.Parameters.AddWithValue("@cantidad", buyTicket.Quantity);
+                    updateCommand.Parameters.AddWithValue("@localidadCodigo", buyTicket.seatingArea.Id);
+                    updateCommand.Parameters.AddWithValue("@partidoCodigo", buyTicket.IdMatch);
+                    updateCommand.ExecuteNonQuery();
+
                     return true;
                 }
             }
@@ -150,9 +162,10 @@ namespace TickectPremium.Services
                 connection.Open();
 
                 string query = @"SELECT DISTINCT CB.PARTIDO_CODIGO AS PARTIDO_CODIGO, CB.CODIGO_FACTURA AS CODIGO_FACTURA, PT.EQUIPO_LOCAL AS EQUIPO_LOCAL, PT.EQUIPO_VISITA AS EQUIPO_VISITA
-                        FROM compra_boletos CB
-                        INNER JOIN partido_futbol PT ON PT.CODIGO = CB.PARTIDO_CODIGO
-                        WHERE CB.ID_USUARIO = @idUsuario";
+                FROM compra_boletos CB
+                INNER JOIN partido_futbol PT ON PT.CODIGO = CB.PARTIDO_CODIGO
+                WHERE CB.ID_USUARIO = @idUsuario
+                ORDER BY CB.CODIGO_FACTURA DESC";
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@idUsuario", idUser);
@@ -183,8 +196,12 @@ namespace TickectPremium.Services
             {
                 connection.Open();
 
-                string query = @"SELECT * FROM partido_futbol
-                        WHERE codigo = @code";
+                string query = @"SELECT CODIGO AS ID, EQUIPO_LOCAL AS LocalTeam, EQUIPO_VISITA AS VisitingTeam, 
+                                CAST(FECHA AS DATE) AS DateMatch, CAST(FECHA AS TIME) AS Hour, 
+                                LUGAR AS Place, (SELECT SUM(DISPONIBILIDAD) FROM localidad_partido 
+                                               WHERE PARTIDO_CODIGO = P.CODIGO) AS TotalTickets 
+                        FROM PARTIDO_FUTBOL P 
+                        WHERE CODIGO = @code";
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@code", code);
@@ -195,13 +212,13 @@ namespace TickectPremium.Services
                     {
                         Match match = new Match
                         {
-                            Id = reader.GetInt32("codigo"),
-                            LocalTeam = reader.GetString("equipo_local"),
-                            VisitingTeam = reader.GetString("equipo_visita"),
-                            DateMatch = reader.GetDateTime("fecha_partido"),
-                            Hour = reader.GetTimeSpan("hora_partido"),
-                            Place = reader.GetString("lugar"),
-                            TotalTickets = reader.GetInt32("total_boletos")
+                            Id = reader.GetInt32("ID"),
+                            LocalTeam = reader.GetString("LocalTeam"),
+                            VisitingTeam = reader.GetString("VisitingTeam"),
+                            DateMatch = reader.GetDateTime("DateMatch"),
+                            Hour = reader.GetTimeSpan("Hour"),
+                            Place = reader.GetString("Place"),
+                            TotalTickets = reader.GetInt32("TotalTickets")
                         };
 
                         return match;
@@ -209,8 +226,9 @@ namespace TickectPremium.Services
                 }
             }
 
-            return null; // Si no se encuentra un partido con el código especificado, se devuelve null
+            return null;
         }
+
 
         public List<BuyTicket> GetBuyTicketsByInvoiceCode(int invoiceCode)
         {
@@ -256,6 +274,7 @@ namespace TickectPremium.Services
 
             return buyTickets;
         }
+
 
     }
 }
